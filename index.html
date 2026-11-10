@@ -3,71 +3,222 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOVA+ | Watch Movies</title>
+<title>NOVA+ | Stream Your World</title>
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
 <header class="navbar">
-    <h1 class="logo">NOVA+</h1>
+
+    <h1 class="logo">NOVA<span>+</span></h1>
 
     <nav>
-        <a href="#home">Home</a>
-        <a href="#trending">TV Shows</a>
+        <a href="#" onclick="home()">Home</a>
+        <a href="#trending">Trending</a>
         <a href="#popular">Movies</a>
+        <a href="#tv">TV Shows</a>
+        <a href="#" onclick="showPremium()">Premium</a>
         <a href="#mylist">My List</a>
     </nav>
 
-    <input type="text" id="search" placeholder="Search movies...">
-    <span class="profile">👤</span>
+    <div class="right">
+        <input id="search"
+        placeholder="Search any movie..."
+        oninput="searchMovies()">
+
+        <button id="loginBtn" onclick="showLogin()">
+            Sign In
+        </button>
+    </div>
+
 </header>
 
-<section class="hero" id="home">
+<section class="hero" id="hero">
+
     <div class="hero-content">
-        <p class="label">NOVA ORIGINAL</p>
-        <h2>THE LAST KINGDOM</h2>
-        <p>
-            A world of adventure, mystery and unforgettable stories.
-            Discover your next favourite movie.
+
+        <p class="label">NOVA+ ORIGINAL EXPERIENCE</p>
+
+        <h1 id="heroTitle">WELCOME TO NOVA+</h1>
+
+        <p id="heroDescription">
+            Discover thousands of movies and television shows.
         </p>
 
-        <button onclick="playMovie()">▶ Play</button>
-        <button class="secondary" onclick="addFeatured()">＋ My List</button>
+        <button onclick="openFeatured()">
+            ▶ Explore Movie
+        </button>
+
+        <button class="secondary" onclick="showPremium()">
+            ✦ Premium
+        </button>
+
     </div>
+
 </section>
 
-<main>
+<main id="mainContent">
+
+    <section class="movie-section" id="searchSection">
+        <h2 id="searchHeading">Search Results</h2>
+        <div class="movie-row" id="searchResults"></div>
+    </section>
 
     <section class="movie-section" id="trending">
-        <h2>Trending Now</h2>
+        <h2>🔥 Trending Today</h2>
         <div class="movie-row" id="trendingMovies"></div>
     </section>
 
     <section class="movie-section" id="popular">
-        <h2>Popular Movies</h2>
+        <h2>⭐ Popular Movies</h2>
         <div class="movie-row" id="popularMovies"></div>
     </section>
 
     <section class="movie-section">
-        <h2>Action Movies</h2>
+        <h2>💥 Action Movies</h2>
         <div class="movie-row" id="actionMovies"></div>
     </section>
 
+    <section class="movie-section">
+        <h2>🇳🇬 Nigerian Cinema</h2>
+        <div class="movie-row" id="nigerianMovies"></div>
+    </section>
+
+    <section class="movie-section">
+        <h2>🇰🇷 Popular TV Shows</h2>
+        <div class="movie-row" id="tvMovies"></div>
+    </section>
+
     <section class="movie-section" id="mylist">
-        <h2>My List</h2>
+        <h2>❤️ My List</h2>
         <div class="movie-row" id="myListMovies"></div>
     </section>
 
 </main>
 
-<div id="message"></div>
+<!-- MOVIE DETAILS -->
+
+<div id="movieModal" class="modal">
+
+    <div class="modal-content">
+
+        <button class="close" onclick="closeModal()">✕</button>
+
+        <img id="detailPoster" src="" alt="Movie poster">
+
+        <div class="modal-info">
+
+            <h1 id="detailTitle"></h1>
+
+            <p id="detailDescription"></p>
+
+            <p id="detailDate"></p>
+
+            <div id="movieActions"></div>
+
+            <h3>Trailer</h3>
+
+            <div id="trailerBox">
+                <p>Loading trailer...</p>
+            </div>
+
+            <h3>Where to Watch</h3>
+
+            <div id="providers">
+                Loading available providers...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- LOGIN -->
+
+<div id="loginModal" class="modal">
+
+    <div class="login-box">
+
+        <button class="close" onclick="closeLogin()">✕</button>
+
+        <h1 id="loginTitle">Welcome Back</h1>
+
+        <p id="loginDescription">Sign in to NOVA+.</p>
+
+        <input id="accountName" placeholder="Your name">
+
+        <input id="accountEmail" type="email"
+        placeholder="Email address">
+
+        <button onclick="accountAction()" id="accountSubmit">
+            Sign In
+        </button>
+
+        <p id="switchAccount">
+            New to NOVA+?
+            <a onclick="toggleAccount()">Create Account</a>
+        </p>
+
+    </div>
+
+</div>
+
+<!-- PREMIUM -->
+
+<div id="premiumPage" class="premium hidden">
+
+    <button onclick="home()" class="back">← Home</button>
+
+    <h1>NOVA+ <span>PREMIUM</span></h1>
+
+    <p>Enjoy an upgraded entertainment experience.</p>
+
+    <div class="plans">
+
+        <div class="plan">
+            <h2>FREE</h2>
+            <h1>₦0</h1>
+            <p>Browse movies</p>
+            <p>Search movies</p>
+            <p>Save favourites</p>
+            <button onclick="home()">Current Plan</button>
+        </div>
+
+        <div class="plan featured-plan">
+            <h2>PLUS</h2>
+            <h1>Coming Soon</h1>
+            <p>More profiles</p>
+            <p>Personal recommendations</p>
+            <p>Enhanced experience</p>
+            <button onclick="alert('Premium subscriptions are coming soon!')">
+                Coming Soon
+            </button>
+        </div>
+
+        <div class="plan">
+            <h2>PREMIUM</h2>
+            <h1>Coming Soon</h1>
+            <p>Premium experience</p>
+            <p>Multiple profiles</p>
+            <p>Enhanced viewing options</p>
+            <button onclick="alert('Premium subscriptions are coming soon!')">
+                Coming Soon
+            </button>
+        </div>
+
+    </div>
+
+</div>
 
 <footer>
-    <p>© 2026 NOVA+ Entertainment. All rights reserved.</p>
+    <h2 class="logo">NOVA<span>+</span></h2>
+    <p>Your world. Your entertainment.</p>
+    <p>© 2026 NOVA+ Entertainment.</p>
 </footer>
 
 <script src="script.js"></script>
 
 </body>
-  </html>
+            </html>
